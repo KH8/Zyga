@@ -1,3 +1,3 @@
-void delay_s(long s);
-void delay_ms(long ms);
-void delay_us(long us);
+void delay_s(int s);
+void delay_ms(int ms);
+void delay_us(int us);
