@@ -6,20 +6,18 @@
 
 #define sbi(port, pin) (port) |= _BV(pin)
 #define cbi(port, pin) (port) &= ~_BV(pin)
+#define tbi(port, pin) (port) ^= _BV(pin)
 
-volatile double pwm_width;
-
-volatile int counter;
+volatile int pwm_width;
 
 const int DEG_0 = 10;
-const int DEG_90 = 50;
+const int DEG_90 = 2;
 const int DEG_180 = 20;
 
-const double MAX_COUNTER = 200;
+const int MS_20 = 40;
 
 void init_servodrive() {
 	pwm_width = DEG_90;
-	counter = 0;
 }
 
 void turn_servodrive_left() {
@@ -34,14 +32,10 @@ void center_servodrive() {
 	pwm_width = DEG_90;
 }
 
-void handle_servodrive() {
-	if(counter < pwm_width) {
+void handle_servodrive(long counter) {
+	if(counter % MS_20 < pwm_width) {
 		sbi(PORTA, 7);
 	} else {
 		cbi(PORTA, 7);
-	}
-	counter++;
-	if(counter > MAX_COUNTER) {
-		counter = 0;
 	}
 }

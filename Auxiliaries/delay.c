@@ -4,14 +4,12 @@
 
 #define tbi(port, pin) (port) ^= _BV(pin)
 
-volatile long counter;
 volatile long counter_s;
 volatile long counter_ms;
 
-const int MS_10KHZ = 10;
+const int MS_1 = 2;
 
 void init_delays() {
-	counter = 0;
 	counter_s = 0;
 	counter_ms = 0;
 }
@@ -30,11 +28,9 @@ void delay_ms(int ms) {
 	}
 }
 
-void handle_delays() {
-	counter++;
-	if(counter > MS_10KHZ) {
+void handle_delays(long counter) {
+	if(counter % MS_1 == 0) {
 		counter_ms++;
 		counter_s = counter_ms / 1000;
-		counter = 0;
 	}
 }
