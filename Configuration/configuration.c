@@ -2,8 +2,8 @@
 
 #include <avr/io.h>
 
-const int FREQ_1_KHZ = 400;
-const int FREQ_36_KHZ = 115;
+const int FREQ_10_KHZ = 899;
+const int FREQ_36_KHZ = 249;
 
 void configure_ports() {
 	DDRA = 0xCF;
@@ -18,7 +18,7 @@ void configure_ports() {
 
 void configure_timers() {
 	TCCR1B = (1 << WGM12) | (1 << CS10);
-	OCR1A = FREQ_1_KHZ;
+	OCR1A = FREQ_10_KHZ;
 
 	TCCR2 = (1 << WGM21) | (1 << CS20);
 	OCR2 = FREQ_36_KHZ;

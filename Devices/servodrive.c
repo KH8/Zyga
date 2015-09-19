@@ -10,18 +10,16 @@
 volatile double pwm_width;
 
 volatile int counter;
-volatile int counter_max;
 
-const int DEG_0 = 12;
-const int DEG_90 = 20;
-const int DEG_180 = 28;
+const int DEG_0 = 10;
+const int DEG_90 = 50;
+const int DEG_180 = 20;
 
-const double PERIOD = 200;
+const double MAX_COUNTER = 200;
 
 void init_servodrive() {
 	pwm_width = DEG_90;
 	counter = 0;
-	counter_max = PERIOD;
 }
 
 void turn_servodrive_left() {
@@ -43,7 +41,7 @@ void handle_servodrive() {
 		cbi(PORTA, 7);
 	}
 	counter++;
-	if(counter > counter_max) {
+	if(counter > MAX_COUNTER) {
 		counter = 0;
 	}
 }

@@ -6,13 +6,13 @@
 
 #define tbi(port, pin) (port) ^= _BV(pin)
 
-long SECOND_US = 1000000;
+long SECOND_US = 1000;
 
 void buzzer(int frequency, int length) {
 	long interval = SECOND_US / ( 2 * frequency );
 	long count = length * frequency / 2;
 	while (count--) {
 		tbi(PORTC, 7);
-		delay_us(interval);
+		delay_ms(interval);
 	}
 }
