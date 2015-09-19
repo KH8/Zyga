@@ -2,7 +2,7 @@
 
 #include <avr/io.h>
 
-const int FREQ_1_KHZ = 500;
+const int FREQ_1_KHZ = 400;
 const int FREQ_36_KHZ = 115;
 
 void configure_ports() {

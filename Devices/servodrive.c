@@ -1,43 +1,49 @@
 #include "../Devices/servodrive.h"
 
 #include <avr/io.h>
-#include <util/delay.h>
 
-int time_recquired = 50;
-int servo_position = 0;
+#include "buzzer.h"
 
 #define sbi(port, pin) (port) |= _BV(pin)
 #define cbi(port, pin) (port) &= ~_BV(pin)
 
-void turn_left() {
-	int t = time_recquired;
-	while(t--)
-	{
-		sbi(PORTA, 7);
-		_delay_ms(1);
-		cbi(PORTA, 7);
-		_delay_ms(19);
-	}
+volatile double pwm_width;
+
+volatile int counter;
+volatile int counter_max;
+
+const int DEG_0 = 12;
+const int DEG_90 = 20;
+const int DEG_180 = 28;
+
+const double PERIOD = 200;
+
+void init_servodrive() {
+	pwm_width = DEG_90;
+	counter = 0;
+	counter_max = PERIOD;
 }
 
-void turn_right() {
-	int t = time_recquired;
-	while(t--)
-	{
-		sbi(PORTA, 7);
-		_delay_ms(2);
-		cbi(PORTA, 7);
-		_delay_ms(18);
-	}
+void turn_servodrive_left() {
+	pwm_width = DEG_0;
 }
 
-void center() {
-	int t = time_recquired;
-	while(t--)
-	{
+void turn_servodrive_right() {
+	pwm_width = DEG_180;
+}
+
+void center_servodrive() {
+	pwm_width = DEG_90;
+}
+
+void handle_servodrive() {
+	if(counter < pwm_width) {
 		sbi(PORTA, 7);
-		_delay_ms(1.5);
+	} else {
 		cbi(PORTA, 7);
-		_delay_ms(18.5);
+	}
+	counter++;
+	if(counter > counter_max) {
+		counter = 0;
 	}
 }
