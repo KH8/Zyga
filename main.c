@@ -11,13 +11,24 @@
 #define bit_is_set(sfr, bit) (_SFR_BYTE(sfr) & _BV(bit))
 #define bit_is_clear(sfr, bit) (!(_SFR_BYTE(sfr) & _BV(bit)))
 
-volatile long counter;
-volatile long counter_max;
+volatile long counter_a;
+volatile long counter_a_max;
+volatile long counter_b;
+volatile long counter_b_max;
 
 ISR(TIMER1_COMPA_vect) {
-	counter++;
-	if(counter > counter_max) {
-		counter = 0;
+	counter_a++;
+	if(counter_a > counter_a_max) {
+		counter_a = 0;
+		//buzzer(2, 1);
+	}
+}
+
+ISR(TIMER2_COMP_vect) {
+	counter_b++;
+	if(counter_b > counter_b_max) {
+		counter_b = 0;
+		buzzer(2, 1);
 	}
 }
 
@@ -25,8 +36,10 @@ int main(void) {
 	configure_ports();
 	configure_timers();
 
-	counter = 0;
-	counter_max = 720;
+	counter_a = 0;
+	counter_a_max = 20000;
+	counter_b = 0;
+	counter_b_max = 20000;
 
 	sei();
 
