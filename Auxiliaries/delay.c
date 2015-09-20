@@ -1,9 +1,5 @@
 #include "../Auxiliaries/delay.h"
 
-#include <avr/io.h>
-
-#define tbi(port, pin) (port) ^= _BV(pin)
-
 volatile long counter_s;
 volatile long counter_ms;
 
