@@ -8,8 +8,8 @@ volatile int full_mode;
 volatile int direction;
 volatile int speed;
 
-const char FULL_MOVEMENT[] = {0x0A, 0x06, 0x05, 0x09};
-const char HALF_MOVEMENT[] = {0x08, 0x02, 0x04, 0x01};
+const char FULL_MOVEMENT[] = { 0x0A, 0x06, 0x05, 0x09 };
+const char HALF_MOVEMENT[] = { 0x08, 0x02, 0x04, 0x01 };
 
 unsigned long internal_counter;
 char movement[4];
@@ -29,7 +29,7 @@ void run(int mode, int dir, long sp) {
 	direction = dir;
 	speed = sp;
 
-	if(full_mode) {
+	if (full_mode) {
 		strcpy(movement, FULL_MOVEMENT);
 	} else {
 		strcpy(movement, HALF_MOVEMENT);
@@ -57,7 +57,7 @@ void stop() {
 }
 
 void handle_main_drive(long counter) {
-	if(speed != 0 && counter % (MIN_1 / (speed * PERIOD)) == 0) {
+	if (speed != 0 && counter % (MIN_1 / (speed * PERIOD)) == 0) {
 		PORTA = movement[internal_counter % PERIOD];
 		internal_counter += direction;
 	}

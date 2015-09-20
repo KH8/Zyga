@@ -24,7 +24,7 @@ void init_servodrive() {
 }
 
 void turn_to_position(int position) {
-	if(servo_position != position) {
+	if (servo_position != position) {
 		pwm_width = position;
 	}
 }
@@ -42,8 +42,8 @@ void center_servodrive() {
 }
 
 void handle_tracking(long counter) {
-	if(counter % MS_200 == 0) {
-		if(servo_position_aux != servo_position) {
+	if (counter % MS_200 == 0) {
+		if (servo_position_aux != servo_position) {
 			pwm_width = 0;
 			servo_position = servo_position_aux;
 			return;
@@ -53,7 +53,7 @@ void handle_tracking(long counter) {
 }
 
 void handle_movement(long counter) {
-	if(counter % MS_20 < pwm_width) {
+	if (counter % MS_20 < pwm_width) {
 		sbi(PORTA, 7);
 	} else {
 		cbi(PORTA, 7);

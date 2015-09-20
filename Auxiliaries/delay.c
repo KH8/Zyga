@@ -12,20 +12,20 @@ void init_delays() {
 
 void delay_s(int s) {
 	long time_to_stop = counter_s + s;
-	while(time_to_stop > counter_s) {
+	while (time_to_stop > counter_s) {
 		//wait
 	}
 }
 
 void delay_ms(int ms) {
 	long time_to_stop = counter_ms + ms;
-	while(time_to_stop > counter_ms) {
+	while (time_to_stop > counter_ms) {
 		//wait
 	}
 }
 
 void handle_delays(long counter) {
-	if(counter % MS_1 == 0) {
+	if (counter % MS_1 == 0) {
 		counter_ms++;
 		counter_s = counter_ms / 1000;
 	}
