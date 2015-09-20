@@ -30,11 +30,14 @@ int main(void) {
 
 	while (1) {
 		if (switch_2()) {
-			buzzer(50, 100);
-			turn_servodrive_left();
+			buzzer(200, 100);
+			/*turn_servodrive_left();
 			delay_s(5);
-			center_servodrive();
+			center_servodrive();*/
 			delay_s(5);
+		}
+		if (switch_3()) {
+			buzzer(100, 100);
 			turn_servodrive_right();
 			delay_s(5);
 			center_servodrive();
