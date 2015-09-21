@@ -25,8 +25,6 @@ int proxi_switch_right_up() {
 }
 
 void handle_proxi_switch() {
-	tbi(PORTD, 3);
-	tbi(PORTD, 5);
-	tbi(PORTD, 7);
-	tbi(PORTA, 6);
+	PORTD ^= (0xA8 << 0);
+	PORTA ^= (0x40 << 0);
 }

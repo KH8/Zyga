@@ -3,7 +3,7 @@
 volatile long counter_s;
 volatile long counter_ms;
 
-const int MS_1 = 2;
+const int MS_1 = 64;
 
 void init_delays() {
 	counter_s = 0;
