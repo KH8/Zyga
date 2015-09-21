@@ -6,7 +6,7 @@
 
 volatile unsigned int full_mode;
 volatile int direction;
-volatile unsigned long speed;
+volatile unsigned int speed;
 
 const char FULL_STEPS[] = { 0x0A, 0x06, 0x05, 0x09 };
 const char HALF_STEPS[] = { 0x08, 0x02, 0x04, 0x01 };
@@ -24,7 +24,7 @@ void init_step_motor() {
 	step_counter = 0;
 }
 
-void run(unsigned int mode, int dir, unsigned long sp) {
+void run(unsigned int mode, int dir, unsigned int sp) {
 	full_mode = mode;
 	direction = dir;
 	speed = sp;
@@ -36,19 +36,19 @@ void run(unsigned int mode, int dir, unsigned long sp) {
 	}
 }
 
-void run_forward_full_mode(unsigned long sp) {
+void run_forward_full_mode(unsigned int sp) {
 	run(1, 1, sp);
 }
 
-void run_forward_half_mode(unsigned long sp) {
+void run_forward_half_mode(unsigned int sp) {
 	run(0, 1, sp);
 }
 
-void run_backward_full_mode(unsigned long sp) {
+void run_backward_full_mode(unsigned int sp) {
 	run(1, -1, sp);
 }
 
-void run_backward_half_mode(unsigned long sp) {
+void run_backward_half_mode(unsigned int sp) {
 	run(0, -1, sp);
 }
 
