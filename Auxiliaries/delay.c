@@ -1,9 +1,9 @@
 #include "../Auxiliaries/delay.h"
 
-volatile unsigned long counter_s;
-volatile unsigned long counter_ms;
+volatile long counter_s;
+volatile long counter_ms;
 
-const unsigned int MS_1 = 2;
+const int MS_1 = 2;
 
 void init_delays() {
 	counter_s = 0;
@@ -24,7 +24,7 @@ void delay_ms(int ms) {
 	}
 }
 
-void handle_delays(unsigned long counter) {
+void handle_delays(long counter) {
 	if (counter % MS_1 == 0) {
 		counter_ms++;
 		counter_s = counter_ms / 1000;

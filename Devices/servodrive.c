@@ -60,7 +60,7 @@ void handle_movement(long counter) {
 	}
 }
 
-void handle_servodrive(unsigned long counter) {
+void handle_servodrive(long counter) {
 	handle_tracking(counter);
 	handle_movement(counter);
 }

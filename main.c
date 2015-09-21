@@ -9,7 +9,7 @@
 #include "Devices/proxi_switch.h"
 #include "Auxiliaries/delay.h"
 
-volatile unsigned long counter;
+volatile long counter;
 
 ISR(TIMER1_COMPA_vect) {
 	handle_step_motor(counter);
@@ -19,7 +19,7 @@ ISR(TIMER1_COMPA_vect) {
 }
 
 ISR(TIMER2_COMP_vect) {
-	//handle_proxi_switch();
+	handle_proxi_switch();
 }
 
 int main(void) {
@@ -33,10 +33,26 @@ int main(void) {
 
 	sei();
 
-	//run_forward_half_mode(30000);
-
 	while (1) {
-		buzzer(220, 100);
-		delay_s(2);
+		while (1) {
+			if (switch_2()) {
+				buzzer(200, 100);
+				run_forward_full_mode(30000);
+				delay_s(5);
+				stop();
+				delay_s(5);
+				run_backward_full_mode(30000);
+				delay_s(5);
+				stop();
+				delay_s(5);
+			}
+			if (switch_3()) {
+				buzzer(100, 100);
+				turn_servodrive_right();
+				delay_s(5);
+				center_servodrive();
+				delay_s(5);
+			}
+		}
 	}
 }
