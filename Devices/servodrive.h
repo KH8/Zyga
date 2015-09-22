@@ -4,4 +4,4 @@ void turn_servodrive_left();
 void turn_servodrive_right();
 void center_servodrive();
 
-void handle_servodrive(long counter);
+void handle_servodrive(int counter);

@@ -7,4 +7,4 @@ void run_backward_half_mode(int sp);
 
 void stop();
 
-void handle_step_motor(long counter);
+void handle_step_motor(int counter);

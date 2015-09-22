@@ -9,8 +9,8 @@
 #include "Devices/proxi_switch.h"
 #include "Auxiliaries/delay.h"
 
-volatile long counter_a;
-volatile long counter_b;
+volatile unsigned int counter_a;
+volatile unsigned int counter_b;
 
 int INIT_TIME = 3;
 
@@ -46,29 +46,20 @@ int main(void) {
 	sei();
 
 	while(INIT_TIME--) {
-		buzzer(220, 100);
+		buzzer(440, 100);
 		delay_s(1);
 	}
 
 	while (1) {
-		if (proxi_switch_front_up()) {
-			buzzer(200, 100);
-		}
 		if (proxi_switch_front_down()) {
-			buzzer(200, 100);
-		}
-		if (proxi_switch_right_up()) {
-			buzzer(200, 100);
-		}
-		if (proxi_switch_left_up()) {
 			buzzer(200, 100);
 		}
 		if (switch_3()) {
 			buzzer(100, 100);
 			turn_servodrive_right();
-			delay_s(5);
+			delay_s(1);
 			center_servodrive();
-			delay_s(5);
+			delay_s(1);
 		}
 	}
 }

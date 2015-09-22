@@ -2,7 +2,7 @@
 
 #include <avr/io.h>
 
-const int FREQ_64_KHZ = 115;
+const int FREQ_64_KHZ = 124;
 
 void configure_ports() {
 	DDRA = 0xCF;

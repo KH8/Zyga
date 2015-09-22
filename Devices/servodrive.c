@@ -41,7 +41,7 @@ void center_servodrive() {
 	turn_to_position(DEG_CENTER);
 }
 
-void handle_tracking(long counter) {
+void handle_tracking(int counter) {
 	if (counter % MS_200 == 0) {
 		if (servo_position_aux != servo_position) {
 			pwm_width = 0;
@@ -52,7 +52,7 @@ void handle_tracking(long counter) {
 	}
 }
 
-void handle_movement(long counter) {
+void handle_movement(int counter) {
 	if (counter % MS_20 < pwm_width) {
 		sbi(PORTA, 7);
 	} else {
@@ -60,7 +60,7 @@ void handle_movement(long counter) {
 	}
 }
 
-void handle_servodrive(long counter) {
+void handle_servodrive(int counter) {
 	handle_tracking(counter);
 	handle_movement(counter);
 }
