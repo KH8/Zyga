@@ -40,7 +40,7 @@ void run(int mode, int dir, int sp) {
 	step_point = MIN_1 / (speed * PERIOD);
 }
 
-int run(int mode, int dir, int sp, int dist, int dist_mode) {
+int run_distance(int mode, int dir, int sp, int dist, int dist_mode) {
 	run(mode, dir, sp);
 	if (dist_mode != distance_mode) {
 		distance_counter = 0;
@@ -71,20 +71,20 @@ void run_backward_half_mode(int sp) {
 	run(0, -1, sp);
 }
 
-int run_forward_full_mode(int sp, int dist) {
-	return run(1, 1, sp, dist, 1);
+int run_forward_full_mode_distance(int sp, int dist) {
+	return run_distance(1, 1, sp, dist, 1);
 }
 
-int run_forward_half_mode(int sp, int dist) {
-	return run(0, 1, sp, dist, 1);
+int run_forward_half_mode_distance(int sp, int dist) {
+	return run_distance(0, 1, sp, dist, 1);
 }
 
-int run_backward_full_mode(int sp, int dist) {
-	return run(1, -1, sp, dist, -1);
+int run_backward_full_mode_distance(int sp, int dist) {
+	return run_distance(1, -1, sp, dist, -1);
 }
 
-int run_backward_half_mode(int sp, int dist) {
-	return run(0, -1, sp, dist, -1);
+int run_backward_half_mode_distance(int sp, int dist) {
+	return run_distance(0, -1, sp, dist, -1);
 }
 
 void handle_motor_movement() {

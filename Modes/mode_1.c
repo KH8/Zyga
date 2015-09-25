@@ -6,8 +6,9 @@
 #include "../Devices/buzzer.h"
 #include "../Auxiliaries/delay.h"
 
-int manover_mode = 0;
-int manover_execution = 0;
+volatile int manover_mode = 0;
+volatile int manover_execution = 0;
+volatile int distance_aux = 0;
 
 int FULL_SPEED = 30000;
 int MID_SPEED = 20000;
@@ -18,18 +19,19 @@ int HALF_TURN_DIST = 1000;
 int GO_BACKWARD_DIST = 1000;
 
 int get_side_sensors_status() {
-	return proxi_switch_left_up() + (2*proxi_switch_right_up());
+	return proxi_switch_left_up_filtered()
+			+ (2*proxi_switch_right_up_filtered());
 }
 
 void compute_mode() {
 	if (manover_execution) {
 		return;
 	}
-	if (!proxi_switch_front_down()) {
+	if (!proxi_switch_front_down_filtered()) {
 		manover_mode = 0;
 		return;
 	}
-	if (!proxi_switch_front_up()) {
+	if (!proxi_switch_front_up_filtered()) {
 		manover_mode = 1;
 		return;
 	}
@@ -51,7 +53,8 @@ void compute_mode() {
 }
 
 void handle_mode_1() {
-	switch(compute_mode()) {
+	compute_mode();
+	switch(manover_mode) {
 		case 0: //stopped
 			stop();
 		break;
@@ -61,14 +64,16 @@ void handle_mode_1() {
 		break;
 		case 2: //go forward and turn left
 			turn_servodrive_left();
-			if(run_forward_full_mode(FULL_SPEED, HALF_TURN_DIST)) {
+			if(run_forward_full_mode_distance(FULL_SPEED, distance_aux)) {
 				manover_execution = 0;
+				distance_aux = 0;
 			}
 		break;
 		case 3: //go forward and turn right
 			turn_servodrive_right();
-			if(run_forward_full_mode(FULL_SPEED, HALF_TURN_DIST)) {
+			if(run_forward_full_mode_distance(FULL_SPEED, distance_aux)) {
 				manover_execution = 0;
+				distance_aux = 0;
 			}
 		break;
 		case 4: //
@@ -76,31 +81,35 @@ void handle_mode_1() {
 		break;
 		case 5: //go backward and turn left widely
 			turn_servodrive_right();
-			if(run_backward_full_mode(MID_SPEED, HALF_TURN_DIST)) {
+			if(run_backward_full_mode_distance(MID_SPEED, HALF_TURN_DIST)) {
 				manover_mode = 2;
+				distance_aux = HALF_TURN_DIST;
 			}
 		break;
 		case 6: //go backward and turn left narrowly
 			center_servodrive();
-			if(run_backward_full_mode(MID_SPEED, FULL_TURN_DIST)) {
+			if(run_backward_full_mode_distance(MID_SPEED, FULL_TURN_DIST)) {
 				manover_mode = 2;
+				distance_aux = FULL_TURN_DIST;
 			}
 		break;
 		case 7: //go backward and turn right widely
 			turn_servodrive_left();
-			if(run_backward_full_mode(MID_SPEED, HALF_TURN_DIST)) {
+			if(run_backward_full_mode_distance(MID_SPEED, HALF_TURN_DIST)) {
 				manover_mode = 3;
+				distance_aux = HALF_TURN_DIST;
 			}
 		break;
 		case 8: //go backward and turn right narrowly
 			center_servodrive();
-			if(run_backward_full_mode(MID_SPEED, FULL_TURN_DIST)) {
+			if(run_backward_full_mode_distance(MID_SPEED, FULL_TURN_DIST)) {
 				manover_mode = 3;
+				distance_aux = FULL_TURN_DIST;
 			}
 		break;
 		case 9:
 			center_servodrive();
-			if(run_backward_full_mode(MID_SPEED, GO_BACKWARD_DIST)) {
+			if(run_backward_full_mode_distance(MID_SPEED, GO_BACKWARD_DIST)) {
 				manover_execution = 0;
 			}
 		break;

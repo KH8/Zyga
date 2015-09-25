@@ -25,6 +25,7 @@ int INIT_TIME = 3;
 void handle_2kHz_interrupt() {
 	handle_step_motor(counter_b);
 	handle_servodrive(counter_b);
+	handle_proxi_switch_filter(counter_b);
 	counter_b++;
 }
 
@@ -51,6 +52,7 @@ void initialize() {
 
 	init_step_motor();
 	init_servodrive();
+	init_proxi_switch();
 	init_delays();
 
 	sei();
