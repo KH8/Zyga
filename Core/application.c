@@ -92,4 +92,5 @@ void main_loop() {
 		break;
 	}
 	post_loop();
+	delay_ms(100);
 }

@@ -1,5 +1,9 @@
 #include "../Modes/mode_0.h"
 
-void handle_mode_0() {
+#include "../Devices/step_motor.h"
+#include "../Devices/servodrive.h"
 
+void handle_mode_0() {
+	stop();
+	center_servodrive();
 }
